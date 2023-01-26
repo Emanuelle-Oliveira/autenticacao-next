@@ -1,12 +1,13 @@
 import {useState} from 'react';
 import {useRouter} from 'next/router';
+import {authService} from '../src/services/auth/authService';
 
 export default function HomeScreen() {
   const router = useRouter();
   
   const [values, setValues] = useState({
-    user: 'manu',
-    password: '12345'
+    user: 'omariosouto',
+    password: 'safepassword'
   });
  
   function handleChange(event) {
@@ -24,11 +25,23 @@ export default function HomeScreen() {
     <div>
       <h1>Login</h1>
       <form onSubmit={(event) => {
+        // onSubmit -> Controller
         event.preventDefault();
-        router.push('/auth-page-static');
-        //router.push('/auth-page-ssr');
-      }
-      }>
+        // Service -> Lógica de negócio
+        // Para fazer o login:
+        authService.login({
+          username: values.user,
+          password: values.password
+        })
+          .then(() => {
+            //router.push('/auth-page-static');
+            router.push('/auth-page-ssr');
+          })
+          .catch(() => {
+            alert('Usuário ou senha inválido');
+          });
+       
+      }}>
         <input
           placeholder="Usuário" name="user"
           value={values.user} onChange={handleChange}
