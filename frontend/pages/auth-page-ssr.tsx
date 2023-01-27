@@ -1,22 +1,22 @@
-import {tokenService} from '../src/services/auth/tokenService';
-import nookies from 'nookies';
+//import {tokenService} from '../src/services/auth/tokenService';
+//import nookies from 'nookies';
+//import {authService} from '../src/services/auth/authService';
+import {withSession} from '../src/services/auth/session';
 
-export async function getServerSideProps(context) {
-  const cookies = nookies.get(context);
-  console.log(cookies);
-  
+// Decorator Pattern
+export const getServerSideProps = withSession((context) => { // Função como parâmetro
   return {
     props: {
-      token: tokenService.get(context)
+      session: context.req.session
     }
   };
-}
-
+});
+  
 export default function AuthPageSSR(props) {
   return(
     <div>
       <h1>
-        Auth Page Server Side Render
+          Auth Page Server Side Render
       </h1>
       <pre>
         {JSON.stringify(props, null, 2)}
@@ -24,5 +24,27 @@ export default function AuthPageSSR(props) {
     </div>
   );
 }
+  
+/*export async function getServerSideProps(context) {
+  //const cookies = nookies.get(context);
+  //console.log(cookies);
+  //const token = tokenService.get(context);
+  //console.log(token);
+  try {
+    const session = await authService.getSession(context);
+    return {
+      props: {
+        session
+      }
+    };
+  } catch (error) { // Se não está autorizado, redireciona
+    return {
+      redirect: {
+        permanent: false,
+        destination: '/?error=401'
+      }
+    };
+  }
+}*/
 
 
