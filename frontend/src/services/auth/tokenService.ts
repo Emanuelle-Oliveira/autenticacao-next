@@ -12,8 +12,8 @@ export const tokenService = {
     //globalThis -> para caso exista localstorage
     //Next quebra ao tentar acessar o localStorage - 
     // pois roda também no server
-    globalThis?.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
-    globalThis?.sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    //globalThis?.localStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
+    //globalThis?.sessionStorage.setItem(ACCESS_TOKEN_KEY, accessToken);
     // Nookies permite acesso tanto no cliente como no servidor
     nookies.set(context, ACCESS_TOKEN_KEY, accessToken, {
       maxAge: ONE_YEAR,
@@ -27,8 +27,8 @@ export const tokenService = {
     //return  globalThis?.sessionStorage.getItem(ACCESS_TOKEN_KEY);
   },
   delete(context = null) {
-    globalThis?.localStorage.removeItem(ACCESS_TOKEN_KEY);
-    globalThis?.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
+    //globalThis?.localStorage.removeItem(ACCESS_TOKEN_KEY);
+    //globalThis?.sessionStorage.removeItem(ACCESS_TOKEN_KEY);
     nookies.destroy(context, ACCESS_TOKEN_KEY);
   }
 };

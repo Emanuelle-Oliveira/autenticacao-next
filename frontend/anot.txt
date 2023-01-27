@@ -1,0 +1,24 @@
+-> Access Token:
+Para que serve?
+  - Pegar qualquer tipo de informação do usuário
+  - Atualizar
+  - Inserir
+  - Deletar
+Duração:
+  - Dura pouco tempo
+  - O mínimo possível
+Risco se vazar:
+  - Quanto maior o tempo de dele, maior é o estrago que quem tiver
+  o token pode fazer
+  
+-> Refresh Token
+Para que serve?
+  - Literalmente, para não precisar pedir a senha e usuário para
+  gerar um novo access token
+Duração:
+  - Dura muito tempo
+  - O refresh token a nivel de backend tá associado ao usuário de
+  alguma forma
+Risco se vazar:
+  - O usuário novo pode gerar token INFINITOS (access e refresh)
+  - Precisa ter alguma forma de invalidar os refresh tokens

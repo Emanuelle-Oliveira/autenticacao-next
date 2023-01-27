@@ -10,15 +10,30 @@ export const authService = {
         password
       }
     })
+      // Salvar o access token
       .then(async (response) => {
         if(!response.ok) {
           throw new Error('Usuário ou senha inválido');
         }
         const body = await response.body;
-        console.log(body);
-        
         tokenService.save(body.data.access_token);
-      });
+        //console.log(body);
+        return body;
+      })
+      // Refresh token
+      .then (async ({ data }) => {
+        const { refresh_token } = data;
+        
+        const response = await HttpClient('/api/refresh', {
+          method: 'POST',
+          body: {
+            refresh_token
+          }
+        });
+        
+        //console.log(refresh_token);
+      })
+    ;
   },
   
   async getSession(context = null) {
@@ -28,7 +43,9 @@ export const authService = {
       headers: {
         // token
         'Authorization': `Bearer ${token}`
-      }
+      },
+      context,
+      refresh: true
     })
       .then((response) => {
         if(!response.ok) {
